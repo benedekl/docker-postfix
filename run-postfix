@@ -32,6 +32,16 @@ function serviceConf {
   else
     echo "No extra map files loaded because optional '/overrides/*.map' not provided."
   fi
+
+  # Include cf files
+  if ls -A /overrides/*.cf 1> /dev/null 2>&1; then
+    cp /overrides/*.cf /etc/postfix/
+    chown root:root /etc/postfix/*.cf
+    chmod 0644 /etc/postfix/*.cf
+    echo "Loaded 'cf files'"
+  else
+    echo "No extra cf files loaded because optional '/overrides/*.cf' not provided."
+  fi
 }
 
 function serviceStart {
